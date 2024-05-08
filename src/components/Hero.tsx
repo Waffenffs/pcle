@@ -6,6 +6,7 @@ export default function Hero() {
             <div className='w-full flex flex-col justify-between sm:flex-row sm:items-center'>
                 <img
                     src='/pcle-design-3.svg'
+                    alt='pcle-design'
                     className='w-[38rem] h-auto mb-10 sm:hidden sm:mt-0'
                 />
                 <div className='w-[32rem] flex flex-col w-full'>

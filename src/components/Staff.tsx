@@ -47,6 +47,7 @@ export default function Staff() {
                     >
                         <img
                             src={staff.image_url}
+                            alt='staff-image'
                             className='w-4/12 h-[26rem] rounded-xl object-cover max-md:w-full'
                         />
 
