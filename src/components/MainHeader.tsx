@@ -1,21 +1,38 @@
+import type { MainHeaderListItemProps } from "@/components/MainHeaderListItem";
+
 import MainHeaderList from "@/components/MainHeaderList";
 import MainHeaderListItem from "@/components/MainHeaderListItem";
-import Link from "next/link";
 
 export default function MainHeader() {
-    return (
-        <nav className='w-full h-16 flex justify-between items-center text-primary'>
-            <Link href={"/"}>
-                <h1 className='scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0'>
-                    PCLE Hub
-                </h1>
-            </Link>
+    const mainHeaderListItems: Array<MainHeaderListItemProps> = [
+        {
+            link: "/",
+            id: "#home",
+            text: "Home",
+        },
+        {
+            id: "#staff",
+            text: "Staff",
+        },
+        {
+            id: "#history",
+            text: "History",
+        },
+        {
+            id: "#contact",
+            text: "Contact",
+        },
+    ];
 
+    return (
+        <nav
+            className='w-full h-16 pt-5 flex flex-col justify-center items-center text-primary
+            fixed sm:pt-10 sm:flex-row'
+        >
             <MainHeaderList>
-                <MainHeaderListItem id='#about' text='About' />
-                <MainHeaderListItem id='#mission' text='Mission' />
-                <MainHeaderListItem id='#team' text='Team' />
-                <MainHeaderListItem id='#system' text='System' />
+                {mainHeaderListItems.map((el, i) => (
+                    <MainHeaderListItem {...el} key={i} />
+                ))}
             </MainHeaderList>
         </nav>
     );
