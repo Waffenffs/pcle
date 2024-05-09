@@ -1,18 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import useScrollY from "@/hooks/useScrollY";
 
 export default function Scrollbar() {
-    const [y, setY] = useState(0);
     const [totalY, setTotalY] = useState(0);
     const [scrollbar, setScrollbar] = useState(0);
 
+    const y = useScrollY();
+
     useEffect(() => {
         if (typeof window !== "undefined") {
-            setY(window.scrollY);
-
-            window.addEventListener("scroll", () => setY(window.scrollY));
-
             const element = document.getElementsByTagName("body")[0];
 
             setTotalY(element.clientHeight);

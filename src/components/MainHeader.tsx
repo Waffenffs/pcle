@@ -1,7 +1,12 @@
-import type { MainHeaderListItemProps } from "@/components/MainHeaderListItem";
+"use client";
 
+import {
+    MainHeaderListItem,
+    type MainHeaderListItemProps,
+} from "@/components/MainHeaderListItem";
 import MainHeaderList from "@/components/MainHeaderList";
-import MainHeaderListItem from "@/components/MainHeaderListItem";
+
+import useScrollY from "@/hooks/useScrollY";
 
 export default function MainHeader() {
     const mainHeaderListItems: Array<MainHeaderListItemProps> = [
@@ -24,10 +29,13 @@ export default function MainHeader() {
         },
     ];
 
+    const y = useScrollY();
+
     return (
         <nav
-            className='w-full h-16 pt-5 flex flex-col justify-center items-center text-primary
-            fixed sm:pt-10 sm:flex-row'
+            className={`w-full h-16 fixed flex justify-center z-10 text-primary
+            
+            ${y < 300 && "items-center"}`}
         >
             <MainHeaderList>
                 {mainHeaderListItems.map((el, i) => (
