@@ -5,8 +5,9 @@ import "./globals.css";
 
 import Staff from "@/components/Staff";
 import MainHeader from "@/components/MainHeader";
-import Scrollbar from "@/components/Scrollbar";
+import ProgressBar from "@/components/ProgressBar";
 import Timeline from "@/components/Timeline";
+import Contact from "@/components/Contact";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,8 @@ export default function RootLayout({
                 <main className='px-8 sm:px-24'>{children}</main>
                 <Staff />
                 <Timeline />
-                <Scrollbar />
+                <ProgressBar />
+                <Contact />
             </body>
         </html>
     );

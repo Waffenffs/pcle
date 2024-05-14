@@ -66,7 +66,9 @@ export default function Timeline() {
                             {tl.date}
                         </time>
                         <h3 className='text-lg font-semibold'>{tl.title}</h3>
-                        <p className='mb-4 text-base font-normal text-gray-300 dark:text-gray-400 whitespace-pre-line max-w-sm'>
+                        <p 
+                            className='mb-4 text-base font-normal text-gray-300 dark:text-gray-400 
+                            whitespace-pre-line max-w-sm max-md:max-w-xs'>
                             {tl.description}
                         </p>
                         {tl.link && (

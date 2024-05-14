@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+/** Returns the current Y axis. */
 const useScrollY = () => {
     const [y, setY] = useState(0);
 
