@@ -8,6 +8,7 @@ import MainHeader from "@/components/MainHeader";
 import ProgressBar from "@/components/ProgressBar";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
+import FAQ from "@/components/FAQ";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
                 <Timeline />
                 <ProgressBar />
                 <Contact />
+                <FAQ />
             </body>
         </html>
     );

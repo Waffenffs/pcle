@@ -37,15 +37,14 @@ export default function Staff() {
             `,
         },
         {
-            name: "Louie Esteban",
-            motto: "Never give up.",
-            position: "CEO",
+            name: "Sir Mark",
+            motto: "Life goes on.",
+            position: "Technical Head @ PCLE Computer Worx - Tagaytay",
             image_url:
-                "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJ1c2luZXNzbWFufGVufDB8fDB8fHww",
-            description: `A self-made techpreneur, he came to Cavite at a young age where he started a business, eventually becoming the present-day PCLE Computer Worx.
+                "https://plus.unsplash.com/premium_photo-1674507922535-c771a8e999b1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzaW5lc3NtYW58ZW58MHx8MHx8fDA%3D",
+            description: `A loyal employee operating under the Tagaytay branch of the PCLE Computer Worx company, alongside handling technical jobs he also acts as a figurehead in guiding and training their interns.
 
-            Today, he can be found mostly at the Cavite branch of the company where he guides both his budling interns and his employees for success.
-            `,
+            Together with his partner, co-workers, and supervision from Louie, they handle the branch's day-to-day operations.`,
         },
     ];
 

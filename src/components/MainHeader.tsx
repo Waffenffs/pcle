@@ -24,16 +24,24 @@ export default function MainHeader() {
             text: "History",
         },
         {
+            id: "#gallery",
+            text: "Gallery"
+        },
+        {
             id: "#contact",
             text: "Contact",
         },
+        {
+            id: "#faq",
+            text: "FAQ"
+        }
     ];
 
     const y = useScrollY();
 
     return (
         <nav
-            className={`w-full h-16 fixed flex justify-center z-10 text-primary
+            className={`w-full h-16 fixed flex justify-center z-20 text-primary
             
             ${y < 300 && "items-center"}`}
         >
