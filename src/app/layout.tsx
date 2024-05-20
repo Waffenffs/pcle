@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import Staff from "@/components/Staff";
+import Contact from "@/components/Contact";
+import FAQ from "@/components/FAQ";
 import MainHeader from "@/components/MainHeader";
 import ProgressBar from "@/components/ProgressBar";
+import Staff from "@/components/Staff";
 import Timeline from "@/components/Timeline";
-import Contact from "@/components/Contact";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
                 <Timeline />
                 <ProgressBar />
                 <Contact />
+                <FAQ />
             </body>
         </html>
     );

@@ -27,6 +27,10 @@ export default function MainHeader() {
             id: "#contact",
             text: "Contact",
         },
+        {
+            id: "#faq",
+            text: "FAQ",
+        }
     ];
 
     const y = useScrollY();
