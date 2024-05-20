@@ -1,14 +1,16 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 import TypographyH1 from "@/components/ui/TypographyH1";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import {
     Carousel,
-    CarouselItem,
     CarouselContent,
-    CarouselPrevious,
+    CarouselItem,
     CarouselNext,
+    CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 interface Staff {
     name: string;
@@ -38,7 +40,7 @@ export default function Staff() {
         },
         {
             name: "Sir Mark",
-            motto: "Life goes on.",
+            motto: "The hardworking are rewarded.",
             position: "Technical Head @ PCLE Computer Worx - Tagaytay",
             image_url:
                 "https://plus.unsplash.com/premium_photo-1674507922535-c771a8e999b1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YnVzaW5lc3NtYW58ZW58MHx8MHx8fDA%3D",
@@ -49,7 +51,10 @@ export default function Staff() {
     ];
 
     return (
-        <div
+        <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.5 }}
             id='staff'
             className='w-full bg-accent flex flex-col justify-center items-center py-14 text-primary'
         >
@@ -105,6 +110,6 @@ export default function Staff() {
                 <CarouselPrevious className='absolute left-0' />
                 <CarouselNext className='absolute right-0' />
             </Carousel>
-        </div>
+        </motion.div>
     );
 }

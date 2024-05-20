@@ -1,13 +1,15 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
 import { send } from "@emailjs/browser";
 
-import { FiPhoneCall } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa";
+import { FiPhoneCall } from "react-icons/fi";
 import { MdOutlineAttachEmail } from "react-icons/md";
 
 type ContactReason =
@@ -52,41 +54,41 @@ export default function Contact() {
 
         if (!button.loading) {
             send(
-                process.env.NEXT_PUBLIC_EMAILJS_SERVICEID!, 
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICEID!,
                 process.env.NEXT_PUBLIC_EMAILJS_TEMPLATEID!,
                 templateParams,
                 {
                     publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLICKEY
                 }
             )
-            .then(() => {
-                setButton({ error: false, loading: true })
-                const unsubscribe = setTimeout(() => {
-                    setButton({
-                        error: false,
-                        loading: false
-                    })
+                .then(() => {
+                    setButton({ error: false, loading: true })
+                    const unsubscribe = setTimeout(() => {
+                        setButton({
+                            error: false,
+                            loading: false
+                        })
 
-                    // Reset states
-                    setTemplateParams({
-                        from_name: "",
-                        from_email: "",
-                        message: "",
-                        inquiry_reason: "General Inquiry"
-                    })
-                }, 4000);
-                () => clearTimeout(unsubscribe);
-            })
-            .catch(() => {
-                setButton(prevState => ({ ...prevState, loading: true }))
-                const unsubscribe = setTimeout(() => {
-                    setButton({
-                        error: true,
-                        loading: false
-                    })
-                }, 4000);
-                () => clearTimeout(unsubscribe)
-            })
+                        // Reset states
+                        setTemplateParams({
+                            from_name: "",
+                            from_email: "",
+                            message: "",
+                            inquiry_reason: "General Inquiry"
+                        })
+                    }, 4000);
+                    () => clearTimeout(unsubscribe);
+                })
+                .catch(() => {
+                    setButton(prevState => ({ ...prevState, loading: true }))
+                    const unsubscribe = setTimeout(() => {
+                        setButton({
+                            error: true,
+                            loading: false
+                        })
+                    }, 4000);
+                    () => clearTimeout(unsubscribe)
+                })
         }
     };
 
@@ -115,14 +117,15 @@ export default function Contact() {
 
                         <div className='flex flex-row items-center gap-2 text-primary'>
                             <MdOutlineAttachEmail className='text-2xl' />
-                            <span className='underline'>
-                                pcle.worx@gmail.com
-                            </span>
+                            <a
+                                className="underline"
+                                href="mailto:pcle.worx@gmail.com"
+                            >pcle.computerworx@gmail.com</a>
                         </div>
                     </div>
                 </div>
 
-                <div className='mt-10 text-8xl text-white/30 tracking-wider'>
+                <div className='mt-10 text-8xl text-white/30 tracking-wider italic'>
                     OR
                 </div>
 
@@ -131,7 +134,10 @@ export default function Contact() {
                 </div>
             </div>
 
-            <form
+            <motion.form
+                initial={{ x: 100, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                transition={{ duration: 1.3 }}
                 onSubmit={sendEmail}
                 className='w-1/2 flex-col gap-10 bg-primary/70 p-10 rounded-2xl text-black shadow shadow-2xl max-md:w-full'
             >
@@ -191,9 +197,8 @@ export default function Contact() {
                     </button>
 
                     <ul
-                        className={`${
-                            !dropdownToggled && "hidden"
-                        } rounded-2xl absolute top-24 w-full z-10 flex flex-col transition duration-300`}
+                        className={`${!dropdownToggled && "hidden"
+                            } rounded-2xl absolute top-24 w-full z-10 flex flex-col transition duration-300`}
                     >
                         {[
                             "General Inquiry",
@@ -206,13 +211,12 @@ export default function Contact() {
                             <a
                                 onClick={() => {
                                     setDropdownToggled(prevState => !prevState)
-                                    setTemplateParams(prevState => ({...prevState, inquiry_reason: reason as ContactReason}))
+                                    setTemplateParams(prevState => ({ ...prevState, inquiry_reason: reason as ContactReason }))
                                 }}
                                 key={index}
                                 className={`px-5 py-4 bg-white hover:bg-zinc-100 transition duration-300
-                                cursor-pointer text-sm ${
-                                    index === 0 && "rounded-t-xl"
-                                } ${index === 5 && "rounded-b-xl"}`}
+                                cursor-pointer text-sm ${index === 0 && "rounded-t-xl"
+                                    } ${index === 5 && "rounded-b-xl"}`}
                             >
                                 {reason}
                             </a>
@@ -247,16 +251,16 @@ export default function Contact() {
                     <AiOutlineLoading3Quarters className={`animate-spin ${button.loading ? "flex" : "hidden"}`} />
                     <span>
                         {button.loading !== undefined && !button.loading
-                        ? 
+                            ?
                             (
                                 button.error ? "Unsuccessful!" : "Successful!"
-                            ) 
-                        : 
+                            )
+                            :
                             "Submit"
                         }
                     </span>
                 </button>
-            </form>
+            </motion.form>
         </footer>
     );
 }

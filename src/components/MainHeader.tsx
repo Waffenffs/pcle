@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 import MainHeaderList from "@/components/MainHeaderList";
 import {
     MainHeaderListItem,
@@ -40,7 +42,10 @@ export default function MainHeader() {
     const y = useScrollY();
 
     return (
-        <nav
+        <motion.nav
+            initial={{ y: -100 }} // Starting position will be above the screen
+            animate={{ y: 0 }} // End position at the top of the screen
+            transition={{ duration: 1.2 }} // Duration
             className={`w-full h-16 fixed flex justify-center z-20 text-primary
             
             ${y < 300 && "items-center"}`}
@@ -50,6 +55,6 @@ export default function MainHeader() {
                     <MainHeaderListItem {...el} key={i} />
                 ))}
             </MainHeaderList>
-        </nav>
+        </motion.nav>
     );
 }

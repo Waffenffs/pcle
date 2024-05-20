@@ -25,7 +25,7 @@ export default function RootLayout({
     return (
         <html lang='en' className='scroll-smooth'>
             <body
-                className={`${inter.className} antialiased bg-background text-foreground overflow-auto`}
+                className={`${inter.className} antialiased bg-background text-foreground overflow-auto overflow-x-hidden`}
             >
                 <MainHeader />
                 <main className='px-8 sm:px-24'>{children}</main>

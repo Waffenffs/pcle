@@ -5,7 +5,6 @@ interface TypographyH1Props {
     children: string;
 }
 
-// To be tested!
 const TypographyH1: React.FC<TypographyH1Props> = ({ className, children }) => (
     <h1
         className={cn(
