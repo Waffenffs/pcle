@@ -14,7 +14,7 @@ const MainHeaderListItem: React.FC<MainHeaderListItemProps> = ({
     text,
 }) => (
     <div
-        className='scroll-m-20 text-md font-semibold tracking-tight transition duration-150 cursor-pointer 
+        className='scroll-m-20 text-sm font-semibold tracking-tight transition duration-150 cursor-pointer 
             hover:text-white sm:text-xl'
     >
         {id ? (
@@ -28,3 +28,4 @@ const MainHeaderListItem: React.FC<MainHeaderListItemProps> = ({
 );
 
 export { MainHeaderListItem, type MainHeaderListItemProps };
+

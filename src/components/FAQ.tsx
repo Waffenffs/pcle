@@ -36,7 +36,7 @@ export default function FAQ() {
                     Frequently Asked Questions
                 </TypographyH1>
                 {questions.map((question, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} className="w-[35rem]">
+                    <AccordionItem key={index} value={`item-${index}`} className="w-[35rem] max-md:w-full">
                         <AccordionTrigger className='border-b-2 pb-3 w-full text-left font-semibold text-xl'>
                             {question.title}
                         </AccordionTrigger>
