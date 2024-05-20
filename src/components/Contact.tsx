@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
 import { send } from "@emailjs/browser";
 
 import { FiPhoneCall } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdOutlineAttachEmail } from "react-icons/md";
 
 type ContactReason =
@@ -17,36 +18,75 @@ type ContactReason =
     | "Warranty and Returns"
     | "Feedback and Suggestions";
 
+interface Button {
+    loading: boolean | undefined;
+    error: boolean | undefined;
+}
+
 export default function Contact() {
-    const [dropdown, setDropdown] = useState<{
-        toggled: boolean;
-        selected: undefined | ContactReason;
+    const [button, setButton] = useState<Button>({
+        loading: undefined,
+        error: undefined,
+    })
+    const [templateParams, setTemplateParams] = useState<{
+        from_name: string | undefined;
+        from_email: string | undefined;
+        message: string | undefined;
+        inquiry_reason: ContactReason
     }>({
-        toggled: false,
-        selected: undefined,
-    });
+        from_name: undefined,
+        from_email: undefined,
+        message: undefined,
+        inquiry_reason: "General Inquiry"
+    })
+    const [dropdownToggled, setDropdownToggled] = useState(false);
+
     const dropdownRef = useDetectClickOutside({
         onTriggered: () =>
-            setDropdown((prevState) => ({ ...prevState, toggled: false })),
+            setDropdownToggled(false)
     });
-
-    const inputFields = {
-        from_name: useRef<HTMLInputElement>(null),
-        from_email: useRef<HTMLInputElement>(null),
-        message: useRef<HTMLTextAreaElement>(null),
-        inquiry_reason: dropdown.selected || "General Inquiry",
-    };
 
     const sendEmail = async (e: React.FormEvent<HTMLFormElement>) => {
         // Prevents the page from refreshing
         e.preventDefault();
 
-        try {
-            /* IMPLEMENT ME */
-            // create .env file for storing keys
-            // send()
-        } catch (error) {
-            console.error(`Error sending email: ${error}`);
+        if (!button.loading) {
+            send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICEID!, 
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATEID!,
+                templateParams,
+                {
+                    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLICKEY
+                }
+            )
+            .then(() => {
+                setButton({ error: false, loading: true })
+                const unsubscribe = setTimeout(() => {
+                    setButton({
+                        error: false,
+                        loading: false
+                    })
+
+                    // Reset states
+                    setTemplateParams({
+                        from_name: "",
+                        from_email: "",
+                        message: "",
+                        inquiry_reason: "General Inquiry"
+                    })
+                }, 4000);
+                () => clearTimeout(unsubscribe);
+            })
+            .catch(() => {
+                setButton(prevState => ({ ...prevState, loading: true }))
+                const unsubscribe = setTimeout(() => {
+                    setButton({
+                        error: true,
+                        loading: false
+                    })
+                }, 4000);
+                () => clearTimeout(unsubscribe)
+            })
         }
     };
 
@@ -92,7 +132,7 @@ export default function Contact() {
             </div>
 
             <form
-                onSubmit={(e) => sendEmail(e)}
+                onSubmit={sendEmail}
                 className='w-1/2 flex-col gap-10 bg-primary/70 p-10 rounded-2xl text-black shadow shadow-2xl max-md:w-full'
             >
                 <label
@@ -103,7 +143,8 @@ export default function Contact() {
                 </label>
                 <input
                     required
-                    ref={inputFields["from_name"]}
+                    value={templateParams.from_name}
+                    onChange={(e) => setTemplateParams(prevState => ({ ...prevState, from_name: e.target.value }))}
                     id='name'
                     name='name'
                     type='text'
@@ -120,7 +161,8 @@ export default function Contact() {
                 </label>
                 <input
                     required
-                    ref={inputFields["from_email"]}
+                    value={templateParams.from_email}
+                    onChange={(e) => setTemplateParams(prevState => ({ ...prevState, from_email: e.target.value }))}
                     id='email'
                     name='email'
                     type='email'
@@ -137,27 +179,20 @@ export default function Contact() {
                         Reasons to Connect
                     </label>
                     <button
-                        onClick={() =>
-                            setDropdown((prevState) => ({
-                                ...prevState,
-                                toggled: !prevState.toggled,
-                            }))
-                        }
+                        onClick={() => setDropdownToggled(prevState => !prevState)}
                         className='font-semibold tracking-tight border rounded-2xl bg-white 
                         text-black border border-2 px-5 py-4 flex justify-between items-center
                         hover:bg-white/70 transition duration-300'
                     >
                         <span>
-                            {dropdown.selected !== undefined
-                                ? dropdown.selected
-                                : "Select Reason"}
+                            {templateParams.inquiry_reason}
                         </span>
                         <FaHeart />
                     </button>
 
                     <ul
                         className={`${
-                            dropdown.toggled !== true && "hidden"
+                            !dropdownToggled && "hidden"
                         } rounded-2xl absolute top-24 w-full z-10 flex flex-col transition duration-300`}
                     >
                         {[
@@ -170,16 +205,14 @@ export default function Contact() {
                         ].map((reason, index) => (
                             <a
                                 onClick={() => {
-                                    setDropdown({
-                                        toggled: false,
-                                        selected: reason as ContactReason,
-                                    });
+                                    setDropdownToggled(prevState => !prevState)
+                                    setTemplateParams(prevState => ({...prevState, inquiry_reason: reason as ContactReason}))
                                 }}
                                 key={index}
                                 className={`px-5 py-4 bg-white hover:bg-zinc-100 transition duration-300
-                                cursor-pointer ${
+                                cursor-pointer text-sm ${
                                     index === 0 && "rounded-t-xl"
-                                } ${index === 4 && "rounded-b-xl"}`}
+                                } ${index === 5 && "rounded-b-xl"}`}
                             >
                                 {reason}
                             </a>
@@ -196,7 +229,8 @@ export default function Contact() {
                     </label>
                     <textarea
                         required
-                        ref={inputFields["message"]}
+                        value={templateParams.message}
+                        onChange={(e) => setTemplateParams(prevState => ({ ...prevState, message: e.target.value }))}
                         rows={5}
                         placeholder='Type your message here'
                         className='rounded-2xl bg-white border-2 border-black px-5 py-4 text-sm 
@@ -205,11 +239,22 @@ export default function Contact() {
                 </div>
 
                 <button
+                    onClick={() => sendEmail}
                     className='rounded-2xl w-full bg-primary text-white mt-10 py-4 
                     font-bold text-xl tracking-tight transition duration-300 border-2 
-                    border-primary hover:bg-green-500 hover:border-primary hover:text-slate-300'
+                    border-primary hover:border-primary flex justify-center items-center gap-3'
                 >
-                    SEND MESSAGE
+                    <AiOutlineLoading3Quarters className={`animate-spin ${button.loading ? "flex" : "hidden"}`} />
+                    <span>
+                        {button.loading !== undefined && !button.loading
+                        ? 
+                            (
+                                button.error ? "Unsuccessful!" : "Successful!"
+                            ) 
+                        : 
+                            "Submit"
+                        }
+                    </span>
                 </button>
             </form>
         </footer>

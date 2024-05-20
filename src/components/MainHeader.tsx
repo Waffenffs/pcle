@@ -1,10 +1,10 @@
 "use client";
 
+import MainHeaderList from "@/components/MainHeaderList";
 import {
     MainHeaderListItem,
     type MainHeaderListItemProps,
 } from "@/components/MainHeaderListItem";
-import MainHeaderList from "@/components/MainHeaderList";
 
 import useScrollY from "@/hooks/useScrollY";
 
@@ -24,12 +24,16 @@ export default function MainHeader() {
             text: "History",
         },
         {
+            id: "#gallery",
+            text: "Gallery"
+        },
+        {
             id: "#contact",
             text: "Contact",
         },
         {
             id: "#faq",
-            text: "FAQ",
+            text: "FAQ"
         }
     ];
 
@@ -37,7 +41,7 @@ export default function MainHeader() {
 
     return (
         <nav
-            className={`w-full h-16 fixed flex justify-center z-10 text-primary
+            className={`w-full h-16 fixed flex justify-center z-20 text-primary
             
             ${y < 300 && "items-center"}`}
         >
